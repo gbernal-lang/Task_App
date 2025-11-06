@@ -1,1 +1,2 @@
-Se crea rama con los datos solicitados, ademas de el commit debidamente redactado, para finalizar de realiza el PR, para resivir Feedback
+Se crea rama con los datos solicitados, además del commit debidamente redactado, para finalizar de realizar el PR, para recibir Feedback..
+
