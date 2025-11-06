@@ -3,3 +3,10 @@
 
 from django.db import models
 
+#Campos del modelo
+class Task(models.Model):
+    titulo = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.titulo
+
