@@ -1,0 +1,9 @@
+<h2>Lista de Tareas</h2>
+
+<ul>
+  {% for task in tasks %}
+    <li>{{ task.title }} - {% if task.done %}✅{% else %}⏳{% endif %}</li>
+  {% empty %}
+    <p>No hay tareas registradas.</p>
+  {% endfor %}
+</ul>
