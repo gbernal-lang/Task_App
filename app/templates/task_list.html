@@ -9,11 +9,12 @@
   <h1>
     Lista que debe ir 
   </h1>
+  {{tasks}}
 <ul>
  <!-- Se hace una iteracion sobre el object_ lista -->
     {% for object in object_list %} 
     <!-- Objetos que se mostraran-->
-    <li>{{ object.titulo }}</li> 
+    <li>{{ object.titulo }} {{object.descripcion}}</li> 
   
     <hr/> 
     <!-- Si no hay nada que mostrar, se muestra un mensaje -->
