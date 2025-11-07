@@ -1,4 +1,6 @@
 from django.http import HttpResponse
 
-def homeView(request):
-    return HttpResponse("Vista djangoo")
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Home funcionando ✅")

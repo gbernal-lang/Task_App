@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include ('home.urls')),
-    path('task/', include ('task.urls')),
+    #Se agrega la url para la nueva app
+    path('tasks/', include ('tasks.urls')),
 
 ]
