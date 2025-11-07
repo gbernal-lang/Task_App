@@ -3,8 +3,9 @@
 
 from django.db import models
 
-#Campos del modelo
+#se declara un nuevo modelo con nombre Task
 class Task(models.Model):
+    #Campos del modelo
     titulo = models.CharField(max_length=200)
 
     def __str__(self):
