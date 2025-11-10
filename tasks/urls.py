@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
-#Url para la vista basada en funciones
+# importing views from views..py
+from .views import TaskCreate
 urlpatterns = [
-    path('', views.index, name='tasks_index'),
+    #Se agrega un nombre para identificar la url
+    path('', TaskCreate.as_view(), name='task-create' ),
 ]

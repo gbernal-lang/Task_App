@@ -1,7 +1,1 @@
-Se Creó una nueva aplicación llamada "tasks", en donde se creó un nuevo modelo llamado "Task", este modelo contiene los campos de title, description, status, created at, updated at.
-Después, esto se ejecutaron los comandos de:
-
-python manage.py makemigrations tasks
-python manage.py migrate
-
-Finalmente, este modelo se importó al archivo de "admin.py", después para verificar se ingresó a la url local con /admin, en donde se pudo verificar el modelo, con los campos solicitados en la tarea.
+En esta parte se genera un formulario a partir de un modelo, primero se genera un modelo con todos los campos solicitados, después, se genera un archivo "forms.py", esto para que se cree un formulario a partir de un modelo, después, se crea una vista usando "Createview", seguido de esto se genera un template para visualizar el formulario y realizar pruebas y ver si se están guardando los datos introducidos.

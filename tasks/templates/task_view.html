@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar tareas</title>
+</head>
+<body>
+<!-- Se verifica si hay mensajes enviados desde el archivo de vistas, views.py-->
+{% if messages %}
+<!---Se muestran los mensajes uno por uno-->
+    {% for message in messages %}
+        <p style="color: green; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+
+    <form method="POST" enctype="multipart/form-data">
+
+<!-- Token de seguridad obligatorio para peticiones POST -->
+    {% csrf_token %}
+
+    <!-- Botón para enviar el formulario -->
+    {{ form.as_p }}
+    
+    <input type="submit" value="Guardar">
+</form>
+</body>
+</html>
