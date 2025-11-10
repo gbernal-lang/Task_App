@@ -1,7 +1,6 @@
-Se Creó una nueva aplicación llamada "tasks", en donde se creó un nuevo modelo llamado "Task", este modelo contiene los campos de title, description, status, created at, updated at.
-Después, esto se ejecutaron los comandos de:
+Para esta actividad se creó una vista basada en clases utilizando DeleteView.
+En esta vista se especificó el modelo correspondiente y la URL a la que se redirige después de eliminar el registro. Además, se agregó un mensaje de confirmación para informar al usuario que la tarea fue eliminada correctamente.
 
-python manage.py makemigrations tasks
-python manage.py migrate
+También se creó una vista basada en función (index) para usarla como página de prueba y como destino de redirección una vez que la eliminación se haya completado.
 
-Finalmente, este modelo se importó al archivo de "admin.py", después para verificar se ingresó a la url local con /admin, en donde se pudo verificar el modelo, con los campos solicitados en la tarea.
+Finalmente, se agregaron las rutas necesarias en el archivo urls.py, incluyendo la ruta que recibe el identificador de la tarea (pk) para poder eliminar el registro seleccionado.
