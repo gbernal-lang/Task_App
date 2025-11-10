@@ -12,11 +12,13 @@ from django.http import HttpResponse
 
 from django.views.generic import UpdateView
 
+from django.views.generic import ListView
+
 class TaskCreate(CreateView):
 
     model = Task  #Nombre del modelo
     template_name = "task_view.html" #nombre del template en html
-    success_url = reverse_lazy('task-create')  # nombre de la url
+    success_url = reverse_lazy('task-list')  # nombre de la url
 
 # Campos del modelo que se mostrarán en el formulario
     fields = ['title', 'description','status']
@@ -30,7 +32,7 @@ class TaskCreate(CreateView):
 class TaskDelete(DeleteView):
     model = Task
     template_name = "taskconfirm_delete.html" #Template para deleteview
-    success_url = reverse_lazy('tasks_index') #url que a la cual se redirije cuando se confirma la eliminación
+    success_url = reverse_lazy('task-list') #url que a la cual se redirije cuando se confirma la eliminación
 
 #Funcion que muestra el mensaje de confirmacion.
     def form_valid(self, form):
@@ -44,10 +46,17 @@ class TaskUpdate(UpdateView):
     model = Task
     template_name = "task_form.html" # Template del formulario
     fields = ['title', 'description', 'status'] #Campos que se pueden editar
-    success_url = reverse_lazy('tasks_index')
+    success_url = reverse_lazy('task-list')
+
+
+class TaskListView(ListView):
+    model = Task #nombre del modelo
+    template_name = "task_list.html" #nombre del template en html
+    context_object_name = "tasks"    
     
 
 #Función para mostrar un mensaje de exito.
 def form_valid(self, form):
         messages.success(self.request, "La tarea se edito correctamente :)")
         return super().form_valid(form)
+
