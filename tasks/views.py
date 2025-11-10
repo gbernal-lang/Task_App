@@ -10,6 +10,8 @@ from django.views.generic import DeleteView
 
 from django.http import HttpResponse
 
+from django.views.generic import UpdateView
+
 class TaskCreate(CreateView):
 
     model = Task  #Nombre del modelo
@@ -35,6 +37,17 @@ class TaskDelete(DeleteView):
         messages.success(self.request, "La tarea se eliminó correctamente :)")
         return super().form_valid(form)
     
-#Vista basada en funciones, para verificar que funciona correctamente la vista de "delate"
-def index(request):
-    return HttpResponse("Gestor de tareas funcionando ✅")
+
+
+
+class TaskUpdate(UpdateView):
+    model = Task
+    template_name = "task_form.html" # Template del formulario
+    fields = ['title', 'description', 'status'] #Campos que se pueden editar
+    success_url = reverse_lazy('tasks_index')
+    
+
+#Función para mostrar un mensaje de exito.
+def form_valid(self, form):
+        messages.success(self.request, "La tarea se edito correctamente :)")
+        return super().form_valid(form)
