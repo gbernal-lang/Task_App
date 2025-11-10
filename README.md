@@ -1,7 +1,6 @@
-Se Creó una nueva aplicación llamada "tasks", en donde se creó un nuevo modelo llamado "Task", este modelo contiene los campos de title, description, status, created at, updated at.
-Después, esto se ejecutaron los comandos de:
+En esta rama se implementó la funcionalidad para editar tareas existentes.
+Para ello se utilizó una vista basada en clases del tipo UpdateView, la cual permite cargar los datos actuales de la tarea en un formulario y guardarlos después de la modificación.
 
-python manage.py makemigrations tasks
-python manage.py migrate
+Además, se agregó una vista basada en funciones (index) únicamente como punto de verificación, utilizada para confirmar visualmente que la edición se realizó de manera correcta.
 
-Finalmente, este modelo se importó al archivo de "admin.py", después para verificar se ingresó a la url local con /admin, en donde se pudo verificar el modelo, con los campos solicitados en la tarea.
+Por último, se configuraron las rutas (URLs) correspondientes para acceder a la vista de edición desde el navegador.
