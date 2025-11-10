@@ -2,7 +2,7 @@ from django.db import models
 #Modelo con los campos solicitados
 class Task (models.Model):
 
-
+#Opciones para el campo de estatus
     ESTATUS_OPCIONES = [
         ("PENDIENTE", "Pendiente"),
         ("EN_PROCESO", "En proceso"),

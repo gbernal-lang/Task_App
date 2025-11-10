@@ -1,12 +1,12 @@
-# Se importa forms
+# Se importa el módulo forms de Django, que permite crear formularios
 from django import forms
  
-# import GeeksModel from models.py
+# Se importa el modelo del archivo models.py
 from .models import Task
  
-# create a ModelForm
-class GeeksForm(forms.ModelForm):
+# Creamos un ModelForm basado en el modelo Task
+class TaskCreateForm(forms.ModelForm):
     # specify the name of model to use
     class Meta:
-        model = Task
-        fields = "__all__"
+        model = Task # Modelo con el que se generará el formulario
+        fields = "__all__" # Se incluyen todos los campos del modelo
