@@ -6,12 +6,11 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 class TaskCreate(CreateView):
 
-    # specify the model for create view
-    model = Task
+    model = Task  #Nombre del modelo
     template_name = "task_view.html" #nombre del template en html
     success_url = reverse_lazy('task-create')  # nombre de la url
 
-    # specify the fields to be displayed
+# Campos del modelo que se mostrarán en el formulario
     fields = ['title', 'description','status']
 
 #Función para  el mensaje de exito
