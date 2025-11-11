@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="es">
+ <!--Cargamos la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS en el template-->      
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Lista de Tareas</title>
+</head>
+
+<body>
+<!--Este bloque verifica si existen mensajes enviados desde las vistas (como mensajes de éxito o error-->
+<!--Si los hay, los recorre uno por uno y muestra una alerta emergente usando SweetAlert (Swal.fire).-->
+{% if messages %}
+  {% for message in messages %}
+  <script>
+    Swal.fire({
+      icon: "success",
+      title: "{{ message|escapejs }}",
+      showConfirmButton: false,
+      timer: 2200
+    });
+  </script>
+  {% endfor %}
+{% endif %}
+
+<div class="page-container">
+
+<h2>LISTA DE TAREAS</h2>
+    
+<a href="{%url 'task-create'%}" class="btn btn-create">
+  <i class="fa-solid fa-circle-up"></i> Agregar tarea
+</a>
+<br/>
+
+   
+<table class="tasks-table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de modificación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for task in tasks %}
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.created_at|date:"d/m/Y H:i" }}</td>
+            <td>{{ task.updated_at|date:"d/m/Y H:i" }}</td>
+            <td class="actions-col">
+                <a href="{% url 'task-update' task.pk %}" class="btn btn-edit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <a href="{% url 'task-delete' task.pk %}" class="btn btn-delete">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="6" class="no-data">No hay tareas registradas.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</body>
+</html>

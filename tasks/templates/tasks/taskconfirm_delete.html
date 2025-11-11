@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--Cargamos la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS en el template-->   
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar tarea</title>
+    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+<body>
+
+<div class="confirm-card">
+    <h2>¿Seguro que desea eliminar esta tarea?</h2>
+    <p class="task-name">{{ object.title }}</p>
+
+    <form method="POST" action="{% url 'task-delete' task.pk %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">
+        <i class="fa-solid fa-trash"></i> Eliminar  
+    </button>
+
+    <a href="{% url 'task-list' %}" class="btn btn-secondary">
+        <i class="fa-solid fa-circle-xmark"></i> Cancelar
+    </a>
+</form>
+
+</div>
+
+</body>
+</html>
