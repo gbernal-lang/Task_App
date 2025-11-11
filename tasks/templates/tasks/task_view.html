@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--Cargamos la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS en el template-->      
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar tareas</title>
+    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<div class="form-card">
+    <h2>Agregar una Tarea</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <!--Token para formularios, esto es algo que se debe usar para formularios-->
+        {% csrf_token %}
+        <!--Muestra los campos del formulario que se definieron en el modelo-->
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-save">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i> Guardar
+        </button>
+    </form>
+<br/>
+    <a href="{% url 'task-list' %}" class="btn btn-back">
+    <i class="fa-solid fa-up-right-from-square"></i> Regresar
+    </a>
+</div>
+
+</body>
+</html>

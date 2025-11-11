@@ -1,0 +1,29 @@
+
+
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('tasks', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Task',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('title', models.CharField(max_length=200, verbose_name='Titulo')),
+                ('description', models.CharField(max_length=200, verbose_name='Descripcion')),
+
+
+                ('status', models.CharField(max_length=200, verbose_name='Estatus')),
+                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Creado por:')),
+                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Actualizado por:')),
+            ],
+        ),
+        migrations.DeleteModel(
+            name='tasks',
+        ),
+    ]

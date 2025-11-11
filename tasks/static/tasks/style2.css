@@ -1,0 +1,221 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #2b7bb9;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+/* Botón Agregar */
+.btn-create {
+    background-color: rgb(18, 177, 18);
+    color: white;
+}
+.btn-create:hover {
+    background-color: rgb(18, 177, 18);
+}
+
+
+/* Botón Editar */
+.btn-edit {
+    background-color: #1976d2;
+    color: white;
+}
+.btn-edit:hover {
+    background-color: #0d62b3;
+}
+
+/* Botón Eliminar */
+.btn-delete {
+    background-color: #d32f2f;
+    color: white;
+}
+.btn-delete:hover {
+    background-color: #b32626;
+}
+
+
+.form-card {
+    background: white;
+    width: 420px;
+    margin: 40px auto;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.12);
+}
+
+
+.form-card h2 {
+    margin-bottom: 18px;
+    text-align: center;
+    color: #333;
+}
+
+/* Estilos del formulario */
+form p {
+    margin-bottom: 14px;
+}
+
+form label {
+    font-weight: 600;
+    color: #444;
+}
+
+form input, form textarea, form select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 14px;
+    transition: border 0.2s ease;
+}
+
+form input:focus, form textarea:focus, form select:focus {
+    border-color: #1976d2;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+    margin-top: 8px;
+}
+
+.btn-save {
+    background: #1976d2;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.btn-save:hover {
+    background: #0d62b3;
+}
+
+.btn-back {
+    background: #555;
+    color: white;
+}
+.btn-back:hover {
+    background: #3d3d3d;
+}
+
+.tasks-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,.12);
+}
+
+/* Encabezados */
+.tasks-table thead {
+    background: #1976d2;
+    color: white;
+}
+.tasks-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+/* Filas */
+.tasks-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Hover fila */
+.tasks-table tbody tr:hover {
+    background: #f2f6fc;
+}
+
+/* Columna de acciones */
+.actions-col {
+    white-space: nowrap;
+}
+
+/* No hay datos */
+.no-data {
+    text-align: center;
+    padding: 16px;
+    color: #666;
+}
+
+.page-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.confirm-card {
+    background: white;
+    width: 420px;
+    padding: 28px;
+    margin: 60px auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.15);
+    text-align: center;
+}
+
+.confirm-card h2 {
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.task-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #444;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+    margin: 0 4px;
+}
+
+/* Botón rojo */
+.btn-danger {
+    background: #d32f2f;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.btn-danger:hover {
+    background: #b32626;
+}
+
+/* Botón gris */
+.btn-secondary {
+    background: #555;
+    color: white;
+}
+.btn-secondary:hover {
+    background: #3b3b3b;
+}
