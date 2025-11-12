@@ -1,4 +1,4 @@
-# ocumentación de la aplicación Task App
+#  Documentación de la aplicación Task App
 
 Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Class-Based Views).
 Este proyecto forma parte de un ejercicio de aprendizaje estructurado sobre el flujo de trabajo con Git, manejo de ramas y buenas prácticas de desarrollo en entornos colaborativos.
