@@ -1,8 +1,8 @@
-Documentacion de la aplicación "Task App"
+# Documentacion de la aplicación "Task App"
 
-Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Class-Based Views). Este proyecto está orientado al aprendizaje estructurado del flujo de trabajo con Git, manejo de ramas y buenas prácticas de desarrollo.
+## Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Class-Based Views). Este proyecto está orientado al aprendizaje estructurado del flujo de trabajo con Git, manejo de ramas y buenas prácticas de desarrollo.
 
-*Características del Proyecto
+### Características del Proyecto
 
 ->Crear tareas
 
@@ -14,7 +14,7 @@ Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Cl
 
 ->Sistema de mensajes de confirmación
 
-*Tecnologías Utilizadas
+### Tecnologías Utilizadas
 
 ->Python 3.10.9
 
@@ -24,30 +24,30 @@ Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Cl
 
 ->HTML + CSS
 
-*Instalación
+### Instalación
 
 ->Clonar el repositorio:
 git clone https://github.com/usuario/Task_App.git
 cd Task_App
 
-->Crear y activar el entorno virtual:
+### Crear y activar el entorno virtual:
 
 python -m venv venv
 source venv/Scripts/activate  # Windows
 
-->Instalar dependencias:
+### Instalar dependencias:
 
 pip install -r requirements.txt
 
-->Aplicar migraciones:
+### Aplicar migraciones:
 
 python manage.py migrate
 
-->Url para ver el entorno virtual
+### Url para ver el entorno virtual
 
 http://127.0.0.1:8000/
 
-*Flujo de Trabajo con Git
+## Flujo de Trabajo con Git
 
 Ramas
 Rama	          Propósito
@@ -58,7 +58,7 @@ Rama	          Propósito
 ->update-task	  Implementación de actualización de tareas
 
 
-*Proceso de Integración
+## Proceso de Integración
 
 ->Crear una rama desde main
 
@@ -71,7 +71,7 @@ Rama	          Propósito
 ->Finalmente, hacer squash merge de modeltask → main
 
 
-*Evidencia
+## Evidencia
 
 Se creó una carpeta llamada evidencia dentro de static/ donde se almacenan las capturas de pantalla del funcionamiento del proyecto.
 
@@ -85,15 +85,15 @@ Estas imágenes muestran el correcto funcionamiento de cada vista (List, Create,
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*Descripción del proyecto en General.
+# Descripción del proyecto en General.
 
 Proyecto creado como parte del aprendizaje de flujo Git y Django.
 
-*Flujo Git Real Utilizado
+## Flujo Git Real Utilizado
 
 Este es el flujo de desarrollo que se siguió durante el proyecto:
 
-*Configuración Inicial
+## Configuración Inicial
 
 ->Creación de entorno virtual.
 
@@ -101,7 +101,7 @@ Este es el flujo de desarrollo que se siguió durante el proyecto:
 
 ->Creación de la app home como prueba inicial.
 
-*Configuración del Repositorio
+## Configuración del Repositorio
 
 ->Clonación del repositorio remoto.
 
@@ -109,7 +109,7 @@ Este es el flujo de desarrollo que se siguió durante el proyecto:
 
 ->Levantamiento del servidor para verificar funcionamiento.
 
-*Ramas y Flujo de Trabajo
+## Ramas y Flujo de Trabajo
 
 ->Creación de rama feature/gustavo para primeras pruebas y Pull Request.
 
@@ -117,7 +117,7 @@ Este es el flujo de desarrollo que se siguió durante el proyecto:
 
 ->Creación de rama modeltask donde se creó la app tasks y el modelo Task.
 
-*Implementación por Funcionalidades
+## Implementación por Funcionalidades
 
 ->Rama feature/create-task para implementar CreateView.
 
@@ -125,7 +125,7 @@ Este es el flujo de desarrollo que se siguió durante el proyecto:
 
 ->Rama feature/update-task para implementar UpdateView.
 
-*Integración Final
+## Integración Final
 
 ->Las ramas feature/create-task, feature/delete-task y feature/update-task no tuvieron Pull Request.
 
@@ -137,7 +137,7 @@ Este es el flujo de desarrollo que se siguió durante el proyecto:
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# Conexión de Django con PostgreSQL y exploración en DBeaver
+# Conexión de Django con PostgreSQL y exploración en pgadmin
 
 ## Descripción general
 Este documento describe el proceso realizado para conectar un proyecto Django con una base de datos PostgreSQL, ejecutar las migraciones necesarias y explorar los esquemas, tablas y registros utilizando pgadmin.
