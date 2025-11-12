@@ -1,8 +1,25 @@
+<!--
+###########################################################
+## Archivo: task_list.html
+## Descripción: Template que muestra la lista de tareas registradas. 
+##              Incluye botones para agregar, editar y eliminar tareas, 
+##              así como alertas emergentes con SweetAlert para mensajes 
+##              de éxito.
+## Fecha de creación: 2025/Noviembre/11
+## Autor: GH (Gustavo Hernández)
+## Fecha de última modificación: 2025/Noviembre/12
+## Autor última modificación: GH
+## Comentarios de última modificación: Se agregaron comentarios descriptivos 
+##              y estructura conforme a la guía de legibilidad.
+###########################################################
+-->
 
 <!DOCTYPE html>
 <html lang="es">
- <!--Cargamos la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS en el template-->      
+
+<!-- Carga la etiqueta "static" para poder usar archivos estáticos como CSS o JS -->
 {% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +30,8 @@
 </head>
 
 <body>
-<!--Este bloque verifica si existen mensajes enviados desde las vistas (como mensajes de éxito o error-->
-<!--Si los hay, los recorre uno por uno y muestra una alerta emergente usando SweetAlert (Swal.fire).-->
+<!-- Verifica si existen mensajes enviados desde las vistas (éxito o error) -->
+<!-- Si los hay, los recorre y muestra una alerta emergente con SweetAlert -->
 {% if messages %}
   {% for message in messages %}
   <script>
@@ -29,51 +46,55 @@
 {% endif %}
 
 <div class="page-container">
+  <h2>LISTA DE TAREAS</h2>
+  
+  <!-- Botón para crear una nueva tarea -->
+  <a href="{% url 'task-create' %}" class="btn btn-create">
+    <i class="fa-solid fa-circle-up"></i> Agregar tarea
+  </a>
 
-<h2>LISTA DE TAREAS</h2>
-    
-<a href="{%url 'task-create'%}" class="btn btn-create">
-  <i class="fa-solid fa-circle-up"></i> Agregar tarea
-</a>
-<br/>
+  <br/>
 
-   
-<table class="tasks-table">
+  <!-- Tabla con la lista de tareas -->
+  <table class="tasks-table">
     <thead>
-        <tr>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Estado</th>
-            <th>Fecha de creación</th>
-            <th>Fecha de modificación</th>
-            <th>Acciones</th>
-        </tr>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Fecha de creación</th>
+        <th>Fecha de modificación</th>
+        <th>Acciones</th>
+      </tr>
     </thead>
 
     <tbody>
-    {% for task in tasks %}
-        <tr>
-            <td>{{ task.title }}</td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.status }}</td>
-            <td>{{ task.created_at|date:"d/m/Y H:i" }}</td>
-            <td>{{ task.updated_at|date:"d/m/Y H:i" }}</td>
-            <td class="actions-col">
-                <a href="{% url 'task-update' task.pk %}" class="btn btn-edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-                <a href="{% url 'task-delete' task.pk %}" class="btn btn-delete">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
-            </td>
-        </tr>
-    {% empty %}
-        <tr>
-            <td colspan="6" class="no-data">No hay tareas registradas.</td>
-        </tr>
-    {% endfor %}
+      {% for task in tasks %}
+      <tr>
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.created_at|date:"d/m/Y H:i" }}</td>
+        <td>{{ task.updated_at|date:"d/m/Y H:i" }}</td>
+        <td class="actions-col">
+          <!-- Botón para editar tarea -->
+          <a href="{% url 'task-update' task.pk %}" class="btn btn-edit">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+
+          <!-- Botón para eliminar tarea -->
+          <a href="{% url 'task-delete' task.pk %}" class="btn btn-delete">
+            <i class="fa-solid fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="no-data">No hay tareas registradas.</td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
+  </table>
 </div>
 </body>
 </html>

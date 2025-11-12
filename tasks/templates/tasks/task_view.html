@@ -1,33 +1,55 @@
+<!--
+###########################################################
+## Archivo: task_view.html
+## Descripción: Template encargado de mostrar el formulario para crear nuevas tareas. 
+##              Incluye los campos del modelo y un botón para guardar la información.
+## Fecha de creación: 2025/Noviembre/07
+## Autor: GH (Gustavo Hernández)
+## Fecha de última modificación: 2025/Noviembre/12
+## Autor última modificación: GH
+## Comentarios de última modificación: Se agregaron comentarios descriptivos 
+##              y encabezado conforme a la guía de legibilidad.
+###########################################################
+-->
+
 <!DOCTYPE html>
 <html lang="es">
-<!--Cargamos la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS en el template-->      
+
+<!-- Carga la etiqueta "static" para usar archivos estáticos como imágenes, CSS o JS -->
 {% load static %}
+
 <head>
     <meta charset="UTF-8">
-    <title>Agregar tareas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Tareas</title>
     <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
-<body>
 
+<body>
 <div class="form-card">
     <h2>Agregar una Tarea</h2>
 
+    <!-- Formulario para crear una nueva tarea -->
     <form method="POST" enctype="multipart/form-data">
-        <!--Token para formularios, esto es algo que se debe usar para formularios-->
+        <!-- Token de seguridad obligatorio en formularios POST -->
         {% csrf_token %}
-        <!--Muestra los campos del formulario que se definieron en el modelo-->
+
+        <!-- Muestra los campos del formulario definidos en el modelo -->
         {{ form.as_p }}
 
+        <!-- Botón para guardar los datos ingresados -->
         <button type="submit" class="btn btn-save">
             <i class="fa-solid fa-arrow-up-from-bracket"></i> Guardar
         </button>
     </form>
-<br/>
+
+    <br/>
+
+    <!-- Botón para regresar a la lista de tareas -->
     <a href="{% url 'task-list' %}" class="btn btn-back">
-    <i class="fa-solid fa-up-right-from-square"></i> Regresar
+        <i class="fa-solid fa-up-right-from-square"></i> Regresar
     </a>
 </div>
-
 </body>
 </html>

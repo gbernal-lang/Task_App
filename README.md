@@ -1,88 +1,90 @@
-# Documentacion de la aplicación "Task App"
+# ocumentación de la aplicación Task App
 
-## Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Class-Based Views). Este proyecto está orientado al aprendizaje estructurado del flujo de trabajo con Git, manejo de ramas y buenas prácticas de desarrollo.
+Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Class-Based Views).
+Este proyecto forma parte de un ejercicio de aprendizaje estructurado sobre el flujo de trabajo con Git, manejo de ramas y buenas prácticas de desarrollo en entornos colaborativos.
 
-### Características del Proyecto
+## Caracteristicas del proyecto
 
-->Crear tareas
+* Crear tareas
 
-->Editar tareas
+*️ Editar tareas
 
-->Eliminar tareas
+*️ Eliminar tareas
 
-->Listar tareas
+* Listar tareas
 
-->Sistema de mensajes de confirmación
+* Sistema de mensajes de confirmación (SweetAlert2)
 
-### Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
-->Python 3.10.9
+Python 3.10.9
 
-->Django 5
+Django 5.x
 
-->SQLite (base de datos por defecto)
+PostgreSQL (conexión final) / SQLite (por defecto)
 
-->HTML + CSS
+HTML + CSS (Font Awesome + SweetAlert2)
 
-### Instalación
-
-->Clonar el repositorio:
+## Instalación
+###  Clonar el repositorio:
 git clone https://github.com/usuario/Task_App.git
 cd Task_App
 
 ### Crear y activar el entorno virtual:
-
 python -m venv venv
-source venv/Scripts/activate  # Windows
+venv\Scripts\activate 
 
 ### Instalar dependencias:
-
 pip install -r requirements.txt
 
 ### Aplicar migraciones:
-
 python manage.py migrate
 
-### Url para ver el entorno virtual
+###  Ejecutar el servidor de desarrollo:
+python manage.py runserver
 
+
+###  URL de entorno local
 http://127.0.0.1:8000/
 
 ## Flujo de Trabajo con Git
-
-Ramas
-Rama	          Propósito
-->main	          Rama principal estable
-->modeltask	      Rama base del módulo de tareas
-->create-task	  Implementación de creación de tareas
-->delete-task	  Implementación de eliminación de tareas
-->update-task	  Implementación de actualización de tareas
-
+### Ramas utilizadas:
+Rama	
+main:
+Rama principal estable
+modeltask:
+Rama base del módulo de tareas
+create-task:
+Implementación de creación de tareas
+delete-task:
+Implementación de eliminación de tareas
+update-task:
+Implementación de actualización de tareas
 
 ## Proceso de Integración
 
-->Crear una rama desde main
+Crear una nueva rama desde main.
 
-->Desarrollar la funcionalidad
+Desarrollar la funcionalidad correspondiente.
 
-->Hacer commit con mensajes claros
+Realizar commits con mensajes claros y descriptivos.
 
-->Hacer merge (resolviendo conflictos si existen)
+Hacer merge hacia modeltask (resolviendo conflictos si existen).
 
-->Finalmente, hacer squash merge de modeltask → main
-
+Finalmente, realizar Squash & Merge de modeltask → main para mantener un historial limpio.
 
 ## Evidencia
 
-Se creó una carpeta llamada evidencia dentro de static/ donde se almacenan las capturas de pantalla del funcionamiento del proyecto.
+Se creó una carpeta llamada evidencia/ dentro de static/, donde se almacenan las capturas de pantalla del funcionamiento del proyecto:
 
-tasks\static\evidencia\Evidencia_Crear Tareas.jpg
-tasks\static\evidencia\Evidencia_Editar Tareas.jpg
-tasks\static\evidencia\Evidencia_Eliminar Tareas.jpg
-tasks\static\evidencia\Evidencia_Lista de Tareas.jpg
-
-Estas imágenes muestran el correcto funcionamiento de cada vista (List, Create, Update, Delete).
+tasks/static/evidencia/Evidencia_Crear_Tareas.jpg
+tasks/static/evidencia/Evidencia_Editar_Tareas.jpg
+tasks/static/evidencia/Evidencia_Eliminar_Tareas.jpg
+tasks/static/evidencia/Evidencia_Lista_de_Tareas.jpg
 
 
+Estas imágenes muestran el correcto funcionamiento de cada vista:
+ListView, CreateView, UpdateView y DeleteView.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Descripción del proyecto en General.

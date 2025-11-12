@@ -1,7 +1,23 @@
+<!--
+###########################################################
+## Archivo: task_form.html
+## Descripción: Template que muestra el formulario para editar una tarea.
+##              Incluye protección CSRF y enlace de regreso al listado.
+## Fecha de creación: 2025/Noviembre/11
+## Autor: GH (Gustavo Hernández)
+## Fecha de última modificación: 2025/Noviembre/12
+## Autor última modificación: GH
+## Comentarios de última modificación: Se agregaron comentarios descriptivos 
+##              y se mejoró la estructura conforme a la guía de legibilidad.
+###########################################################
+-->
+
 <!DOCTYPE html>
 <html lang="es">
- <!--Cargamos la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS en el template-->      
+
+<!-- Carga la etiqueta "static" para usar archivos estáticos como imágenes, CSS o JS -->
 {% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,26 +25,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <title>Editar Tareas</title>
 </head>
+
 <body>
     <div class="form-card">
+        <h1>Editar Tarea</h1>
 
-    <h1>Editar Tarea</h1>
+        <!-- Formulario para editar una tarea existente -->
+        <form method="post">
+            <!-- Token CSRF obligatorio en formularios Django -->
+            {% csrf_token %}
+            
+            <!-- Renderiza los campos del formulario -->
+            {{ form.as_p }}
 
-<form method="post">
-    <!--Token para formularios, esto es algo que se debe usar para formularios-->
-    {% csrf_token %}
-    <!--Muestra los campos del formulario para editarlos-->
-    {{ form.as_p }}
+            <!-- Botón para guardar los cambios -->
+            <button type="submit" class="btn btn-save">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i> Guardar Cambios
+            </button>
+        </form>
 
-    <button type="submit" class="btn btn-save">
-    <i class="fa-solid fa-arrow-up-from-bracket"></i>  Guardar Cambios
-    </button>
-</form>
-<br/>
-<a href="{% url 'task-list' %}" class="btn btn-back">
-<i class="fa-solid fa-up-right-from-square"></i> Regresar
-</a>
-</div>
+        <br/>
 
+        <!-- Enlace para regresar al listado de tareas -->
+        <a href="{% url 'task-list' %}" class="btn btn-back">
+            <i class="fa-solid fa-up-right-from-square"></i> Regresar
+        </a>
+    </div>
 </body>
 </html>

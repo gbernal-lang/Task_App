@@ -1,61 +1,74 @@
+###########################################################
+## Módulo: views.py (Vistas de la aplicación de tareas)
+## Descripción: Contiene las vistas basadas en clases (CBV) para crear, 
+##              listar, actualizar y eliminar tareas. Implementa mensajes 
+##              de confirmación y redirección tras cada acción.
+## Fecha de creación: 2025/Noviembre/06
+## Autor: GH (Gustavo Hernández)
+## Fecha de última modificación: 2025/Noviembre/12
+## Autor última modificación: GH
+## Comentarios de última modificación: Se agregaron comentarios
+## descriptivos
+###########################################################
 
+#Se importa para usar la vista generica de Createview
 from django.views.generic.edit import CreateView
 from .models import Task
 # reverse_lazy se usa para obtener la URL al terminar correctamente la vista
 from django.urls import reverse_lazy
 #Se importa para que se puede mostrar los mensajes.
 from django.contrib import messages
-#Se importa para usar la la CBV de Delete
+#Se importa para usar la vista generica de Deleteview
 from django.views.generic import DeleteView
-#Se importa para usar la la CBV de Update
+#Se importa para usar la vista generica de Updateview
 from django.views.generic import UpdateView
-
+#Se importa para usar la vista generica de Listview
 from django.views.generic import ListView
 
-#Clase para usar la clase Createview
+# Clase para crear nuevas tareas
 class TaskCreate(CreateView):
 
-    model = Task  #Nombre del modelo
-    template_name = "tasks/task_view.html" #nombre del template en html
-    success_url = reverse_lazy('task-list')  # Url a la cual se rederigira cuando se complete la tarea
+    model = Task  # Nombre del modelo
+    template_name = "tasks/task_view.html" #Nombre del template en html
+    success_url = reverse_lazy('task-list')  # URL de redirección tras guardar una tarea
 
 # Campos del modelo que se mostrarán en el formulario
     fields = ['title', 'description','status']
 
-#Función para  el mensaje de exito cuando se agrega una tarea
+# Muestra un mensaje de éxito cuando se agrega una tarea
     def form_valid(self, form):
         messages.success(self.request, "La tarea se guardó exitosamente :)")
         return super().form_valid(form)
 
-#Clase para usar la vista de Delete
+# Clase para eliminar tareas existentes
 class TaskDelete(DeleteView):
     model = Task
-    template_name = "tasks/taskconfirm_delete.html" #Nombre del template usado para esta vista
-    success_url = reverse_lazy('task-list') #Url a la cual se rederigira cuando se elimine una tarea
+    template_name = "tasks/taskconfirm_delete.html" # Template utilizado para confirmar la eliminación
+    success_url = reverse_lazy('task-list') # URL de redirección tras eliminar la tarea
 
-#Funcion para mostrar un mensaje cuando la tarea se haya eliminado
+ # Muestra un mensaje cuando la tarea se elimina correctamente
     def post(self, request, *args, **kwargs):
         messages.success(request, "La tarea se eliminó correctamente")
         return super().post(request, *args, **kwargs)
 
 
-#Clase para usar la vista de Update
+# Clase para actualizar tareas existentes
 class TaskUpdate(UpdateView):
     model = Task
-    template_name = "tasks/task_form.html" # Nombre del template usado para esta vista
+    template_name = "tasks/task_form.html" # Template utilizado para editar tareas
     fields = ['title', 'description', 'status'] # Campos que se pueden editar
-    success_url = reverse_lazy('task-list') # Url a la cual se rederigira cuando se edite y se guarde la tarea
+    success_url = reverse_lazy('task-list') # URL de redirección tras guardar los cambios
 
-    #Función para mostrar un mensaje de exito cuando se edite la tarea.
+    # Muestra un mensaje de éxito cuando se edita la tarea
     def form_valid(self, form):
         messages.success(self.request, "La tarea se edito correctamente")
         return super().form_valid(form)
 
-#Clase para Listview
+# Clase para listar todas las tareas registradas
 class TaskListView(ListView):
     model = Task 
-    template_name = "tasks/task_list.html" 
-    context_object_name = "tasks"    
+    template_name = "tasks/task_list.html" # Template que muestra la lista de tareas
+    context_object_name = "tasks"          # Nombre del contexto utilizado en el template
     
 
 
