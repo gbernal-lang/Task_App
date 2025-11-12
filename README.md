@@ -5,21 +5,21 @@ Este proyecto forma parte de un ejercicio de aprendizaje estructurado sobre el f
 
 ## Caracteristicas del proyecto
 
-* Crear tareas
+ Crear tareas
 
-*️ Editar tareas
+ Editar tareas
 
-*️ Eliminar tareas
+ Eliminar tareas
 
-* Listar tareas
+ Listar tareas
 
-* Sistema de mensajes de confirmación (SweetAlert2)
+ Sistema de mensajes de confirmación (SweetAlert2)
 
 ## Tecnologías Utilizadas
 
 Python 3.10.9
 
-Django 5.x
+Django 5   
 
 PostgreSQL (conexión final) / SQLite (por defecto)
 
@@ -48,18 +48,14 @@ python manage.py runserver
 http://127.0.0.1:8000/
 
 ## Flujo de Trabajo con Git
+
 ### Ramas utilizadas:
-Rama	
-main:
-Rama principal estable
-modeltask:
-Rama base del módulo de tareas
-create-task:
-Implementación de creación de tareas
-delete-task:
-Implementación de eliminación de tareas
-update-task:
-Implementación de actualización de tareas
+
+- **main:** Rama principal estable  
+- **modeltask:** Rama base del módulo de tareas  
+- **create-task:** Implementación de creación de tareas  
+- **delete-task:** Implementación de eliminación de tareas  
+- **update-task:** Implementación de actualización de tareas  
 
 ## Proceso de Integración
 
@@ -73,18 +69,19 @@ Hacer merge hacia modeltask (resolviendo conflictos si existen).
 
 Finalmente, realizar Squash & Merge de modeltask → main para mantener un historial limpio.
 
-## Evidencia
+##  Evidencia
 
-Se creó una carpeta llamada evidencia/ dentro de static/, donde se almacenan las capturas de pantalla del funcionamiento del proyecto:
+Se creó una carpeta llamada **`evidencia/`** dentro de `static/`, donde se almacenan las capturas de pantalla del funcionamiento del proyecto:
 
-tasks/static/evidencia/Evidencia_Crear_Tareas.jpg
-tasks/static/evidencia/Evidencia_Editar_Tareas.jpg
-tasks/static/evidencia/Evidencia_Eliminar_Tareas.jpg
-tasks/static/evidencia/Evidencia_Lista_de_Tareas.jpg
-
+- `tasks/static/evidencia/Evidencia_Crear_Tareas.jpg`
+- `tasks/static/evidencia/Evidencia_Editar_Tareas.jpg`
+- `tasks/static/evidencia/Evidencia_Eliminar_Tareas.jpg`
+- `tasks/static/evidencia/Evidencia_Lista_de_Tareas.jpg`
 
 Estas imágenes muestran el correcto funcionamiento de cada vista:
-ListView, CreateView, UpdateView y DeleteView.
+**ListView**, **CreateView**, **UpdateView** y **DeleteView**.
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Descripción del proyecto en General.
