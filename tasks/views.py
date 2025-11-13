@@ -1,3 +1,6 @@
+# Se importa el módulo logging para registrar eventos, errores y mensajes informativos
+import logging
+
 ###########################################################
 ## Módulo: views.py (Vistas de la aplicación de tareas)
 ## Descripción: Contiene las vistas basadas en clases (CBV) para crear, 
@@ -25,6 +28,10 @@ from django.views.generic import UpdateView
 #Se importa para usar la vista generica de Listview
 from django.views.generic import ListView
 
+# Se crea una instancia del logger para este módulo (views.py)
+# Permite identificar de dónde proviene cada mensaje en el archivo de logs
+logger = logging.getLogger(__name__)
+
 # Clase para crear nuevas tareas
 class TaskCreate(CreateView):
 
@@ -37,8 +44,20 @@ class TaskCreate(CreateView):
 
 # Muestra un mensaje de éxito cuando se agrega una tarea
     def form_valid(self, form):
-        messages.success(self.request, "La tarea se guardó exitosamente :)")
-        return super().form_valid(form)
+        try:
+           logger.info(f"Tarea creada: {form.instance.titlle}") # Registra un evento exitoso
+           messages.success(self.request, "La tarea se guardó exitosamente :)")
+           return super().form_valid(form)
+        except Exception as e:
+         logger.error(f"Error al crear tarea: {e}")
+        # Muestra un mensaje de error al usuario en la interfaz
+        messages.error(self.request, "Ocurrió un error al crear la tarea.")
+        # Retorna form_invalid para que el formulario no se procese
+        return self.form_invalid(form)
+    
+
+
+
 
 # Clase para eliminar tareas existentes
 class TaskDelete(DeleteView):
@@ -48,6 +67,10 @@ class TaskDelete(DeleteView):
 
  # Muestra un mensaje cuando la tarea se elimina correctamente
     def post(self, request, *args, **kwargs):
+        # Se usa para registrar un evento importante
+        # o inusual, pero no es un error. 
+        task = self.get_object()
+        logger.warning(f"Tarea eliminada: {task.title}") 
         messages.success(request, "La tarea se eliminó correctamente")
         return super().post(request, *args, **kwargs)
 
@@ -61,8 +84,18 @@ class TaskUpdate(UpdateView):
 
     # Muestra un mensaje de éxito cuando se edita la tarea
     def form_valid(self, form):
-        messages.success(self.request, "La tarea se edito correctamente")
-        return super().form_valid(form)
+        try:
+               logger.info(f"Tarea Editada correctamente: {form.instance.titllle}") # Registra un evento exitoso
+               
+               messages.success(self.request, "La tarea se edito correctamente")
+               return super().form_valid(form)
+        
+        except Exception as e:
+               logger.error(f"Error al editar la tarea: {e}")
+               messages.error(self.request, "Ocurrior un error al editar la tarea")
+               return self.form_invalid(form)
+
+
 
 # Clase para listar todas las tareas registradas
 class TaskListView(ListView):
