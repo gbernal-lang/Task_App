@@ -1,3 +1,5 @@
+from django.db import models
+
 ###########################################################
 ## Módulo/Clase: Task
 ## Descripción: Modelo que representa una tarea dentro de la app, con título,
@@ -8,10 +10,6 @@
 ## Autor última modificación: GH
 ## Comentarios de última modificación: Se agregaron comentarios conforme a la guía de legibilidad.
 ###########################################################
-
-
-from django.db import models
-
 
 # Modelo con los campos solicitados
 class Task(models.Model):
