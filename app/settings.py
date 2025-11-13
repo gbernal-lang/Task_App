@@ -9,15 +9,18 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 from dotenv import load_dotenv
 import os
+from pathlib import Path
+
+
 load_dotenv()
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG') == 'True'
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG") == "True"
 
 
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9x_9fzj--^b2v(!ly5m6%g79#!=mtkt-d&s)=t@uhqp0_q#zjv'
+SECRET_KEY = "django-insecure-9x_9fzj--^b2v(!ly5m6%g79#!=mtkt-d&s)=t@uhqp0_q#zjv"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,60 +41,59 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'home',
-    'tasks',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "home",
+    "tasks",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = "app.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = "app.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
-
 
 
 # Password validation
@@ -99,16 +101,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -116,9 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-mx'
+LANGUAGE_CODE = "es-mx"
 
-TIME_ZONE = 'America/Mexico_City'
+TIME_ZONE = "America/Mexico_City"
 
 USE_I18N = True
 
@@ -128,9 +130,79 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ---------------------------------------------------------------
+# Configuración del sistema de LOGGING (registro de eventos)
+# ---------------------------------------------------------------
+# Este bloque define cómo Django y tu aplicación registran información
+# sobre lo que ocurre mientras se ejecuta el proyecto (por ejemplo:
+# creación, edición o eliminación de tareas, errores, advertencias, etc.)
+# ---------------------------------------------------------------
+
+LOGGING = {
+    # Versión del esquema de configuración (siempre se deja en 1)
+    "version": 1,
+
+    # Permite mantener los loggers existentes del sistema (no los desactiva)
+    "disable_existing_loggers": False,
+
+    # -----------------------------------------------------------------
+    # FORMATTERS: definen el formato con que se muestran los mensajes
+    # -----------------------------------------------------------------
+    "formatters": {
+        "verbose": {  # Nombre del formato personalizado
+            # Estructura del mensaje del log
+            "format": "{levelname} {asctime} {module} {message}",
+            # 'style' indica cómo se interpretan las llaves del formato
+            "style": "{",
+        },
+    },
+
+    # -----------------------------------------------------------------
+    # HANDLERS: definen **dónde** se van a enviar los logs
+    # (a un archivo, a la consola, a un servicio, etc.)
+    # -----------------------------------------------------------------
+    "handlers": {
+        # Handler que escribe los logs en un archivo llamado "debug.log"
+        "file": {
+            "level": "INFO",  # Registra INFO, WARNING y ERROR
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "debug.log"),  # ruta del archivo
+            "formatter": "verbose",  # usa el formato definido arriba
+        },
+        # Handler que muestra los logs directamente en la terminal
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+
+    # -----------------------------------------------------------------
+    # LOGGERS: agrupan los mensajes por módulo o aplicación
+    # -----------------------------------------------------------------
+    "loggers": {
+        # Logger principal de Django (para mensajes del framework)
+        "django": {
+            "handlers": ["file", "console"],  # Muestra en archivo y consola
+            "level": "INFO",  # Nivel mínimo a registrar
+            "propagate": True,  # Permite que los mensajes se propaguen
+        },
+
+        # Logger específico de la app "tasks"
+        "tasks": {
+            "handlers": ["file", "console"],  # Mismos manejadores
+            "level": "INFO",  # Solo muestra INFO o superior
+            "propagate": False,  # Evita duplicar mensajes
+        },
+    },
+}

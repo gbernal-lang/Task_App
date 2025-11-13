@@ -1,0 +1,11 @@
+# Archivo de configuración para Flake8
+# Flake8 es una herramienta que analiza el código Python para verificar el cumplimiento
+# de las reglas de estilo y buenas prácticas del lenguaje (PEP8).
+
+[flake8]
+# Define la longitud máxima permitida por línea.
+# Si una línea supera los 88 caracteres, Flake8 mostrará una advertencia.
+max-line-length = 88
+
+# Lista de carpetas y archivos que Flake8 debe ignorar al analizar el código.
+exclude = .git,__pycache__,venv,migrations

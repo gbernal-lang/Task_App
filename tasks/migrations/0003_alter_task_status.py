@@ -6,13 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tasks', '0002_task_delete_tasks'),
+        ("tasks", "0002_task_delete_tasks"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='task',
-            name='status',
-            field=models.CharField(choices=[('PENDIENTE', 'Pendiente'), ('EN_PROCESO', 'En proceso'), ('TERMINADO', 'Terminado')], default='pendiente', max_length=200, verbose_name='Estatus'),
+            model_name="task",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("PENDIENTE", "Pendiente"),
+                    ("EN_PROCESO", "En proceso"),
+                    ("TERMINADO", "Terminado"),
+                ],
+                default="pendiente",
+                max_length=200,
+                verbose_name="Estatus",
+            ),
         ),
     ]

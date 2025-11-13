@@ -1,53 +1,74 @@
-###########################################################
+
 ## Módulo: views.py (Vistas de la aplicación de tareas)
-## Descripción: Contiene las vistas basadas en clases (CBV) para crear, 
-##              listar, actualizar y eliminar tareas. Implementa mensajes 
+## Descripción: Contiene las vistas basadas en clases (CBV) para crear,
+##              listar, actualizar y eliminar tareas. Implementa mensajes
 ##              de confirmación y redirección tras cada acción.
 ## Fecha de creación: 2025/Noviembre/06
 ## Autor: GH (Gustavo Hernández)
-## Fecha de última modificación: 2025/Noviembre/12
+## Fecha de última modificación: 2025/Noviembre/13
 ## Autor última modificación: GH
-## Comentarios de última modificación: Se agregaron comentarios
-## descriptivos
-###########################################################
+## Comentarios de última modificación: Se agregaron comentarios y 
+## se agregan eventos para identificar errores o eventos de exito
 
-#Se importa para usar la vista generica de Createview
+
+# Se importa el módulo logging para registrar eventos, errores y mensajes informativos
+import logging
+
+
+# Se importa para usar la vista generica de Createview
 from django.views.generic.edit import CreateView
 from .models import Task
+
 # reverse_lazy se usa para obtener la URL al terminar correctamente la vista
 from django.urls import reverse_lazy
-#Se importa para que se puede mostrar los mensajes.
+
+# Se importa para que se puede mostrar los mensajes.
 from django.contrib import messages
-#Se importa para usar la vista generica de Deleteview
+
+# Se importa para usar la vista generica de Deleteview
 from django.views.generic import DeleteView
-#Se importa para usar la vista generica de Updateview
+
+# Se importa para usar la vista generica de Updateview
 from django.views.generic import UpdateView
-#Se importa para usar la vista generica de Listview
+
+# Se importa para usar la vista generica de Listview
 from django.views.generic import ListView
+
+# Se crea una instancia del logger para este módulo (views.py)
+# Permite identificar de dónde proviene cada mensaje en el archivo de logs
+logger = logging.getLogger(__name__)
 
 # Clase para crear nuevas tareas
 class TaskCreate(CreateView):
 
     model = Task  # Nombre del modelo
-    template_name = "tasks/task_view.html" #Nombre del template en html
-    success_url = reverse_lazy('task-list')  # URL de redirección tras guardar una tarea
+    template_name = "tasks/task_view.html"  # Nombre del template en html
+    success_url = reverse_lazy("task-list")  # URL de redirección tras guardar una tarea
 
-# Campos del modelo que se mostrarán en el formulario
-    fields = ['title', 'description','status']
+    # Campos del modelo que se mostrarán en el formulario
+    fields = ["title", "description", "status"]
 
-# Muestra un mensaje de éxito cuando se agrega una tarea
+    # Muestra un mensaje de éxito cuando se agrega una tarea
     def form_valid(self, form):
+        logger.info(f"Tarea creada: {form.instance.title}") # Registra un evento exitoso
         messages.success(self.request, "La tarea se guardó exitosamente :)")
         return super().form_valid(form)
+
 
 # Clase para eliminar tareas existentes
 class TaskDelete(DeleteView):
     model = Task
-    template_name = "tasks/taskconfirm_delete.html" # Template utilizado para confirmar la eliminación
-    success_url = reverse_lazy('task-list') # URL de redirección tras eliminar la tarea
+    template_name = (
+    "tasks/taskconfirm_delete.html" # Template utilizado para confirmar la eliminación
+    ) 
+    success_url = reverse_lazy("task-list")  # URL de redirección tras eliminar la tarea
 
- # Muestra un mensaje cuando la tarea se elimina correctamente
+    # Muestra un mensaje cuando la tarea se elimina correctamente
     def post(self, request, *args, **kwargs):
+        task = self.get_object()
+        # Se usa para registrar un evento importante
+        # o inusual, pero no es un error. 
+        logger.warning(f"Tarea eliminada: {task.title}") 
         messages.success(request, "La tarea se eliminó correctamente")
         return super().post(request, *args, **kwargs)
 
@@ -55,21 +76,21 @@ class TaskDelete(DeleteView):
 # Clase para actualizar tareas existentes
 class TaskUpdate(UpdateView):
     model = Task
-    template_name = "tasks/task_form.html" # Template utilizado para editar tareas
-    fields = ['title', 'description', 'status'] # Campos que se pueden editar
-    success_url = reverse_lazy('task-list') # URL de redirección tras guardar los cambios
+    template_name = "tasks/task_form.html"  # Template utilizado para editar tareas
+    fields = ["title", "description", "status"]  # Campos que se pueden editar
+    success_url = reverse_lazy(
+        "task-list"
+    )  # URL de redirección tras guardar los cambios
 
     # Muestra un mensaje de éxito cuando se edita la tarea
     def form_valid(self, form):
+        logger.info(f"Tarea Editada: {form.instance.title}") # Registra un evento exitoso
         messages.success(self.request, "La tarea se edito correctamente")
         return super().form_valid(form)
 
+
 # Clase para listar todas las tareas registradas
 class TaskListView(ListView):
-    model = Task 
-    template_name = "tasks/task_list.html" # Template que muestra la lista de tareas
-    context_object_name = "tasks"          # Nombre del contexto utilizado en el template
-    
-
-
-
+    model = Task
+    template_name = "tasks/task_list.html"  # Template que muestra la lista de tareas
+    context_object_name = "tasks"  # Nombre del contexto utilizado en el template
