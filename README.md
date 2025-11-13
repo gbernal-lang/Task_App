@@ -13,9 +13,11 @@ DB_USER=dev_user
 DB_PASSWORD=Dev2025
 DB_HOST=localhost
 DB_PORT=5432
+```
 
-## Después, se carga en settings.py
+##  Después, se carga en settings.py
 
+``` bash
 from dotenv import load_dotenv
 import os
 
@@ -23,12 +25,13 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG") == "True"
-
+```
 
 ### El archivo .env fue agregado al .gitignore para evitar exponer datos sensibles.
 
 ## Configuración de Logging en settings.py
 
+``` bash
 LOGGING = {
     # Versión del esquema de configuración (siempre se deja en 1)
     "version": 1,
@@ -79,11 +82,11 @@ LOGGING = {
         },
     },
 }
-
+``` 
 ### Se genera el archivo debug.log, donde se registran eventos del sistema y de la aplicación.
 
 ## Implementación de Logging en tasks/views.py
-
+``` bash
 import logging
 logger = logging.getLogger(__name__)
 
@@ -97,14 +100,14 @@ class TaskCreate(CreateView):
         logger.info(f"Tarea creada: {form.instance.title}")  # Evento exitoso
         messages.success(self.request, "La tarea se guardó exitosamente :)")
         return super().form_valid(form)
-
+``` 
 
 ## Configuración de Flake8
 
 Se creó el archivo .flake8 en la raíz del proyecto con la siguiente configuración:
 
 Configuración de estilo de código Python (PEP8)
-
+``` bash
 [flake8]
 max-line-length = 88
 exclude = .git,__pycache__,venv,migrations
@@ -112,7 +115,7 @@ exclude = .git,__pycache__,venv,migrations
 ### Para ejecutar el control de calidad:
 
 flake8 .
-
+``` 
 
 ### Este comando revisa el cumplimiento de las normas PEP8 y detecta errores como:
 
@@ -131,8 +134,9 @@ Black es un formateador automático de código Python.
 Permite mantener un estilo uniforme en todo el proyecto.
 
 ### Para aplicarlo:
-
+``` bash
 black .
+```
 
 ### Este :
 
@@ -143,10 +147,10 @@ Asegura que todo el equipo mantenga el mismo formato de escritura.
 ## Ejemplo del archivo debug.log
 
 Cuando se crea una tarea, el log genera registros como los siguientes:
-
+``` bash
 INFO 2025-11-13 10:48:34,517 views Tarea creada: Pruebas
 INFO 2025-11-13 10:48:34,589 basehttp "POST /tasks/create/ HTTP/1.1" 302 0
 INFO 2025-11-13 10:48:34,642 basehttp "GET /tasks/ HTTP/1.1" 200 3324
-
+``` 
 
 Estos registros permiten auditar la ejecución del sistema y verificar el flujo de las vistas.
