@@ -23,7 +23,7 @@ class Task(models.Model):
 
     # Campos del modelo
     title = models.CharField(max_length=200, verbose_name="Titulo")
-    description = models.CharField(max_length=200, verbose_name="Descripcion")
+    description = models.CharField(max_length=200, verbose_name="Descripción",blank= True)
     status = models.CharField(
         max_length=200,
         verbose_name="Estatus",
@@ -31,7 +31,7 @@ class Task(models.Model):
         default="pendiente",
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Creado por:")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Actualizado por:")
+    # updated_at = models.DateTimeField(auto_now=True, verbose_name="Actualizado por:")
 
     # Función que devuelve el titulo de la tarea
     def __str__(self):
