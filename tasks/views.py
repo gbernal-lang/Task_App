@@ -25,20 +25,26 @@ from django.views.generic import UpdateView
 #Se importa para usar la vista generica de Listview
 from django.views.generic import ListView
 
+from .forms import TaskCreateForm
+
 # Clase para crear nuevas tareas
 class TaskCreate(CreateView):
 
     model = Task  # Nombre del modelo
     template_name = "tasks/task_view.html" #Nombre del template en html
+    form_class = TaskCreateForm #Modelform utilizado
     success_url = reverse_lazy('task-list')  # URL de redirección tras guardar una tarea
-
-# Campos del modelo que se mostrarán en el formulario
-    fields = ['title', 'description','status']
 
 # Muestra un mensaje de éxito cuando se agrega una tarea
     def form_valid(self, form):
         messages.success(self.request, "La tarea se guardó exitosamente :)")
         return super().form_valid(form)
+    #Muestra un mensaje cuando hay error en los campos del formulario
+    def form_invalid(self, form):
+
+        messages.error(self.request, "Revisa los campos del formulario")
+        return super().form_invalid(form)
+    
 
 # Clase para eliminar tareas existentes
 class TaskDelete(DeleteView):
@@ -56,13 +62,19 @@ class TaskDelete(DeleteView):
 class TaskUpdate(UpdateView):
     model = Task
     template_name = "tasks/task_form.html" # Template utilizado para editar tareas
-    fields = ['title', 'description', 'status'] # Campos que se pueden editar
+    form_class = TaskCreateForm #Modelform creado
     success_url = reverse_lazy('task-list') # URL de redirección tras guardar los cambios
 
     # Muestra un mensaje de éxito cuando se edita la tarea
     def form_valid(self, form):
         messages.success(self.request, "La tarea se edito correctamente")
         return super().form_valid(form)
+    #Muestra un mensaje cuando los datos de los campos no son los correctos
+    def form_invalid(self, form):
+
+         messages.error(self.request, "Revisa los campos del formulario")
+        
+         return super().form_invalid(form)
 
 # Clase para listar todas las tareas registradas
 class TaskListView(ListView):
