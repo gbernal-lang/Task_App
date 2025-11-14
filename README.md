@@ -30,7 +30,7 @@ Para esta actividad, se realizaron validaciones personalizadas para los campos d
 
 ```
 
-### Después, en el archvio views.py, se coloca un mensajes para informar al usario sobre el problema.
+### Después, en el archvio views.py, se coloca un mensajes para informar al usuario sobre el problema.
 
 ```bash
 # Muestra un mensaje cuando hay error en los campos del formulario
