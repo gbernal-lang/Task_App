@@ -5,3 +5,5 @@ __pycache__/
 .env
 **/migrations/
 debug.log
+pytest.ini
+reporte.html
