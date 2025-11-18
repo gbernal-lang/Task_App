@@ -12,20 +12,12 @@
 ###########################################################
 -->
 
-<!DOCTYPE html>
-<html lang="es">
+{% extends "tasks/base.html" %}
 
-<!-- Carga la etiqueta "static" para poder usar archivos estáticos como imágenes, CSS o JS -->
-{% load static %}
+{% block title %}Eliminar Tarea{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Eliminar Tarea</title>
-    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-</head>
+{% block content %}
 
-<body>
 <div class="confirm-card">
     <h2>¿Seguro que desea eliminar esta tarea?</h2>
 
@@ -48,5 +40,5 @@
         </a>
     </form>
 </div>
-</body>
-</html>
+
+{% endblock %}

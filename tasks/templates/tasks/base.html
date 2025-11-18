@@ -1,0 +1,59 @@
+<!--
+###########################################################
+## Archivo: base.html
+## Descripción: Plantilla base del sistema de Gestión de Tareas.
+##              Contiene la estructura principal del sitio (layout),
+##              incluyendo cabecera, bloques heredables y elementos compartidos.
+## Fecha de creación: 2025/Noviembre/18
+## Autor: GH (Gustavo Hernández)
+## Fecha de última modificación: 2025/Noviembre/18
+## Autor última modificación: GH
+## Comentarios de última modificación: Se corrigió el bloque <title> para 
+##              permitir que las plantillas hijas sobrescriban el título dinámicamente.
+###########################################################
+-->
+<!-- Carga la etiqueta "static" para poder usar archivos estáticos como CSS o JS -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>{% block title %}Gestión de Tareas{% endblock %}</title>
+</head>
+<body>
+    
+<!-- Verifica si existen mensajes enviados desde las vistas (éxito o error) -->
+<!-- Si los hay, los recorre y muestra una alerta emergente con SweetAlert -->
+{% if messages %}
+  {% for message in messages %}
+  <script>
+    Swal.fire({
+      icon: "success",
+      title: "{{ message|escapejs }}",
+      showConfirmButton: false,
+      timer: 2200
+    });
+  </script>
+  {% endfor %}
+{% endif %}
+
+ <!-- Contenido de cada página -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- JS global -->
+    <script src="{% static 'js/task.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

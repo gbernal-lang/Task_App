@@ -12,26 +12,17 @@
 ###########################################################
 -->
 
-<!DOCTYPE html>
-<html lang="es">
+{% extends "tasks/base.html" %}
 
-<!-- Carga la etiqueta "static" para usar archivos estáticos como imágenes, CSS o JS -->
-{% load static %}
+{% block title %}Agregar Tareas{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Tareas</title>
-    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-</head>
+{% block content %}
 
-<body>
 <div class="form-card">
     <h2>Agregar una Tarea</h2>
 
     <!-- Formulario para crear una nueva tarea -->
-    <form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" novalidate>
         <!-- Token de seguridad obligatorio en formularios POST -->
         {% csrf_token %}
 
@@ -51,5 +42,4 @@
         <i class="fa-solid fa-up-right-from-square"></i> Regresar
     </a>
 </div>
-</body>
-</html>
+{% endblock %}
