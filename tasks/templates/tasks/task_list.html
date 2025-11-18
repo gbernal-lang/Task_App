@@ -14,39 +14,23 @@
 ###########################################################
 -->
 
-<!DOCTYPE html>
-<html lang="es">
+{% extends "tasks/base.html" %}
 
-<!-- Carga la etiqueta "static" para poder usar archivos estáticos como CSS o JS -->
-{% load static %}
+{% block title %}Lista de Tareas{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Lista de Tareas</title>
-</head>
+{% block content %}
 
-<body>
-<!-- Verifica si existen mensajes enviados desde las vistas (éxito o error) -->
-<!-- Si los hay, los recorre y muestra una alerta emergente con SweetAlert -->
-{% if messages %}
-  {% for message in messages %}
-  <script>
-    Swal.fire({
-      icon: "success",
-      title: "{{ message|escapejs }}",
-      showConfirmButton: false,
-      timer: 2200
-    });
-  </script>
-  {% endfor %}
-{% endif %}
 
 <div class="page-container">
   <h2>LISTA DE TAREAS</h2>
+
+
+  <!-- Campo de búsqueda -->
+  <input type="text" id="filtro" placeholder="Buscar tareas..." class="search-input">
+
+  <!-- Etiqueta para contador -->
+  <p class="task-count">Total de tareas: <span id="total-tasks">0</span></p>
+
   
   <!-- Botón para crear una nueva tarea -->
   <a href="{% url 'task-create' %}" class="btn btn-create">
@@ -64,13 +48,21 @@
         <th>Estado</th>
         <th>Fecha de creación</th>
         <th>Fecha de modificación</th>
-        <th>Acciones</th>
+        <th></th>
       </tr>
     </thead>
 
-    <tbody>
+    <tbody id="task-table-body">
       {% for task in tasks %}
-      <tr>
+    <!--
+      {# 
+        Cada fila <tr> representa una tarea.
+        - data-title: guarda el título de la tarea
+        - data-description: guarda la descripción
+        Estos atributos "data-*" permiten que el JS pueda leerlos para filtrar sin recargar la página.
+    #}
+      -->
+     <tr data-title="{{ task.title }}" data-description="{{ task.description }}">
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
         <td>{{ task.status }}</td>
@@ -96,5 +88,5 @@
     </tbody>
   </table>
 </div>
-</body>
-</html>
+
+{% endblock %}

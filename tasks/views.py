@@ -5,10 +5,10 @@
 ##              de confirmación y redirección tras cada acción.
 ## Fecha de creación: 2025/Noviembre/06
 ## Autor: GH (Gustavo Hernández)
-## Fecha de última modificación: 2025/Noviembre/12
+## Fecha de última modificación: 2025/Noviembre/18
 ## Autor última modificación: GH
-## Comentarios de última modificación: Se agregaron comentarios
-## descriptivos
+## Comentarios de última modificación: Se agregaro una vista basada en funciones,
+## esto para el uso de fetch
 ###########################################################
 
 #Se importa para usar la vista generica de Createview
@@ -24,6 +24,9 @@ from django.views.generic import DeleteView
 from django.views.generic import UpdateView
 #Se importa para usar la vista generica de Listview
 from django.views.generic import ListView
+# Se importa para enviar datos en formato json, como respuesta HTTP
+from django.http import JsonResponse
+
 
 # Clase para crear nuevas tareas
 class TaskCreate(CreateView):
@@ -70,6 +73,15 @@ class TaskListView(ListView):
     template_name = "tasks/task_list.html" # Template que muestra la lista de tareas
     context_object_name = "tasks"          # Nombre del contexto utilizado en el template
     
-
+"""
+    Vista que devuelve el número total de tareas registradas en la base de datos.
+    Esta vista se utiliza principalmente para consultas asíncronas (fetch),
+    permitiendo actualizar el contador de tareas sin recargar la página completa.
+"""
+def task_count(request):
+    # Obtiene la cantidad total de registros almacenados en el modelo Task
+    count = Task.objects.count()
+    # Retorna la respuesta en formato JSON con la clave 'total'
+    return JsonResponse ({"total":count})
 
 
