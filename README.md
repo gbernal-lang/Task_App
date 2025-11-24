@@ -1,162 +1,147 @@
-#  Documentación de la aplicación Task App
+# Integración de GlitchTip con Django
+
+Este proyecto incorpora un sistema de monitoreo y captura de errores utilizando GlitchTip, una alternativa open-source a Sentry. La integración permite recibir, almacenar y visualizar errores generados por la aplicación Django en tiempo real, facilitando el debugging y aumentando la observabilidad del sistema.
+
+## Comparativa de Herramientas de Monitoreo
+
+A continuación se documenta un cuadro comparativo entre las herramientas evaluadas durante la investigación previa del proyecto y la herramienta final seleccionada (**GlitchTip**).
+
+| Herramienta | Tipo | Ventajas | Desventajas |
+| :--- | :--- | :--- | :--- |
+| **GlitchTip** | Open Source (Self-hosted o cloud) | - Muy similar a Sentry. <br>- Panel moderno y detallado. <br>- API compatible con SDKs de Sentry. <br>- Permite alertas y notificaciones. | - Requiere Docker para instalación completa. |
+| **Sentry (Cloud)** | SaaS | - Estándar del mercado. <br>- SDK muy maduro. <br>- Dashboards avanzados. | - Versión cloud limitada en el plan gratuito. <br>- Self-hosted muy pesado. |
+| **Errbit** | Open Source | - Ligero. <br>- Fácil de desplegar. | - Interfaz antigua. <br>- No soporta el SDK moderno de Sentry. |
+| **Elastic APM** | Open Source / Enterprise | - Observabilidad completa (Logs, metrics, tracing). | - Requiere ElasticSearch + stack ELK (pesado). <br>- Configuración compleja. |
+
+
+Después, de lo anterior se siguio con la instalación de GlitchTip, Por lo cual en primer lugar se instalo Docker.
+Así mismo, Se utilizo el siguiente compose para la instlacion de manera local.
+
+```bash
+services:
+  postgres:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=glitchtip
+      - POSTGRES_USER=glitchtip
+      - POSTGRES_PASSWORD=glitchtip
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  glitchtip:
+    image: glitchtip/glitchtip:latest
+    restart: unless-stopped
+    command: sh -c "python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8000 glitchtip.wsgi"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=glitchtip.settings
+      - DATABASE_URL=postgres://glitchtip:glitchtip@postgres:5432/glitchtip
+      - REDIS_URL=redis://redis:6379/1
+      - SECRET_KEY=1234567891011121314151617181920
+      - DEBUG=True
+      - EMAIL_URL=consolemail://  # Agrega esto para evitar errores de email
+    ports:
+      - "8000:8000"
+
+  # WORKER DE CELERY - ESTO ES LO QUE FALTABA
+  worker:
+    image: glitchtip/glitchtip:latest
+    restart: unless-stopped
+    command: celery -A glitchtip worker -l INFO
+    depends_on:
+      - postgres
+      - redis
+      - glitchtip
+    environment:
+      - DJANGO_SETTINGS_MODULE=glitchtip.settings
+      - DATABASE_URL=postgres://glitchtip:glitchtip@postgres:5432/glitchtip
+      - REDIS_URL=redis://redis:6379/1
+      - SECRET_KEY=1234567891011121314151617181920
+      - EMAIL_URL=consolemail://
+
+  # BEAT DE CELERY (opcional pero recomendado para tareas programadas)
+  beat:
+    image: glitchtip/glitchtip:latest
+    restart: unless-stopped
+    command: celery -A glitchtip beat -l INFO
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=glitchtip.settings
+      - DATABASE_URL=postgres://glitchtip:glitchtip@postgres:5432/glitchtip
+      - REDIS_URL=redis://redis:6379/1
+      - SECRET_KEY=1234567891011121314151617181920
+      - EMAIL_URL=consolemail://
+
+volumes:
+  postgres-data:
+
+```
+
+Después, de esto se tuvo que instalar el sdk de sentry, esto para poder hacer la comunición de django hacia,
+el servidor de glitchtip
+
+### Instalacíon del SDK
+
+```bash
+pip install sentry-sdk
+
+```
+
+Teniendo esto, se hace la configuracíon en el archvio de settings.py
+
+```bash
 
-Gestor de tareas desarrollado con Django utilizando Vistas Basadas en Clases (Class-Based Views).
-Este proyecto forma parte de un ejercicio de aprendizaje estructurado sobre el flujo de trabajo con Git, manejo de ramas y buenas prácticas de desarrollo en entornos colaborativos.
+# Inicializa el SDK de GlitchTip para capturar errores en Django
+sentry_sdk.init(
+    # DSN (Data Source Name): clave pública + URL del servidor + ID del proyecto.
+    # Permite que la aplicación envíe errores al servidor de Sentry/GlitchTip.
+    dsn="http://9eebc2a03fef4208a86411a561bdf87b@localhost:8000/1",
 
-## Caracteristicas del proyectoo
+    # Integración específica para Django:
+    # habilita la captura automática de excepciones, errores en vistas,
+    # información del request, usuario autenticado, etc.
+    integrations=[DjangoIntegration()],
 
- Crear tareas
+    # Modo debug del SDK:
+    # muestra en consola los eventos enviados, útil para pruebas locales.
+    debug=True,
 
- Editar tareas
+    # Entorno donde corre este proyecto:
+    # permite diferenciar errores de "development", "staging" o "production".
+    environment="development",
+)
 
- Eliminar tareas
+```
 
- Listar tareas
+Para poder probar, se hace una vista para generar un error.
 
- Sistema de mensajes de confirmación (SweetAlert2)
+```bash
+# Esta función existe únicamente para forzar un error y comprobar
+# que GlitchTip está capturando y enviando excepciones correctamente.
+def trigger_error(request):
+    # Al dividir entre cero se genera una excepción ZeroDivisionError.
+    1 / 0
 
-## Tecnologías Utilizadas
 
-Python 3.10.9
+```
 
-Django 5   
+Finalmente, se coloca la url, en el archivo de urls.py, para generar el error.
 
-PostgreSQL (conexión final) / SQLite (por defecto)
+```bash
+ # Ruta para forzar un error
+    path('glitchtip-debug/', views.trigger_error, name='glitchtip-debug')
 
-HTML + CSS (Font Awesome + SweetAlert2)
+```
 
-## Instalación
-###  Clonar el repositorio:
-git clone https://github.com/usuario/Task_App.git
-cd Task_App
+Cabe mencionar que para que se visualize, se debe de arrancar el servidor de django,
+en el puerto 8001.
 
-### Crear y activar el entorno virtual:
-python -m venv venv
-venv\Scripts\activate 
-
-### Instalar dependencias:
-pip install -r requirements.txt
-
-### Aplicar migraciones:
-python manage.py migrate
-
-###  Ejecutar el servidor de desarrollo:
-python manage.py runserver
-
-
-###  URL de entorno local
-http://127.0.0.1:8000/
-
-## Flujo de Trabajo con Git
-
-### Ramas utilizadas:
-
-- **main:** Rama principal estable  
-- **modeltask:** Rama base del módulo de tareas  
-- **create-task:** Implementación de creación de tareas  
-- **delete-task:** Implementación de eliminación de tareas  
-- **update-task:** Implementación de actualización de tareas  
-
-## Proceso de Integración
-
-Crear una nueva rama desde main.
-
-Desarrollar la funcionalidad correspondiente.
-
-Realizar commits con mensajes claros y descriptivos.
-
-Hacer merge hacia modeltask (resolviendo conflictos si existen).
-
-Finalmente, realizar Squash & Merge de modeltask → main para mantener un historial limpio.
-
-##  Evidencia
-
-Se creó una carpeta llamada **`evidencia/`** dentro de `static/`, donde se almacenan las capturas de pantalla del funcionamiento del proyecto:
-
-- `tasks/static/evidencia/Evidencia_Crear_Tareas.jpg`
-- `tasks/static/evidencia/Evidencia_Editar_Tareas.jpg`
-- `tasks/static/evidencia/Evidencia_Eliminar_Tareas.jpg`
-- `tasks/static/evidencia/Evidencia_Lista_de_Tareas.jpg`
-
-Estas imágenes muestran el correcto funcionamiento de cada vista:
-**ListView**, **CreateView**, **UpdateView** y **DeleteView**.
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Descripción del proyecto en General.
-
-Proyecto creado como parte del aprendizaje de flujo Git y Django.
-
-## Flujo Git Real Utilizado
-
-Este es el flujo de desarrollo que se siguió durante el proyecto:
-
-## Configuración Inicial
-
-->Creación de entorno virtual.
-
-->Instalación de Django.
-
-->Creación de la app home como prueba inicial.
-
-## Configuración del Repositorio
-
-->Clonación del repositorio remoto.
-
-->Configuración de archivo .env.
-
-->Levantamiento del servidor para verificar funcionamiento.
-
-## Ramas y Flujo de Trabajo
-
-->Creación de rama feature/gustavo para primeras pruebas y Pull Request.
-
-->Creación de rama Aprender_CBV para practicar y aprender Vistas Basadas en Clases.
-
-->Creación de rama modeltask donde se creó la app tasks y el modelo Task.
-
-## Implementación por Funcionalidades
-
-->Rama feature/create-task para implementar CreateView.
-
-->Rama feature/delete-task para implementar DeleteView + confirmación.
-
-->Rama feature/update-task para implementar UpdateView.
-
-## Integración Final
-
-->Las ramas feature/create-task, feature/delete-task y feature/update-task no tuvieron Pull Request.
-
-->En su lugar, estas ramas se integraron primero en modeltask usando merge.
-
-->Después, la rama modeltask se integró a main utilizando Squash & Merge para mantener el historial limpio.
-
-->Finalmente, se actualizó main en el repositorio remoto con git push.
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Conexión de Django con PostgreSQL y exploración en pgadmin
-
-## Descripción general
-Este documento describe el proceso realizado para conectar un proyecto Django con una base de datos PostgreSQL, ejecutar las migraciones necesarias y explorar los esquemas, tablas y registros utilizando pgadmin.
-
-El proyecto utilizado fue **Task App**, una aplicación para gestionar tareas con vistas basadas en clases (CBV).
-
----
-
-## Configuración de la conexión a la base de datos
-
-En el archivo `settings.py` del proyecto Django, se configuró la conexión de la siguiente manera:
-
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'task_app',
-        'USER': 'dev_user',
-        'PASSWORD': 'Dev2025',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}

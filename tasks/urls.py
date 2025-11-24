@@ -11,25 +11,27 @@
 ##              
 ###########################################################
 
-from django.urls import path
-from . import views
-# Importación de las vistas definidas en views.py
-from .views import TaskCreate, TaskDelete, TaskUpdate, TaskListView
+# tasks/urls.py
 
+from django.urls import path
+from . import views # Importamos el módulo completo 'views'
 
 urlpatterns = [
     # Ruta para crear una nueva tarea
-    path('create/', TaskCreate.as_view(), name='task-create'),
+    path('create/', views.TaskCreate.as_view(), name='task-create'),
 
     # Ruta para eliminar una tarea existente.
-    # <int:pk> indica que la vista recibirá el ID (primary key) de la tarea a eliminar.
-    # Muestra una página de confirmación y, al aceptar, elimina el registro.
-    path('delete/<int:pk>/', TaskDelete.as_view(), name='task-delete'),
+    path('delete/<int:pk>/', views.TaskDelete.as_view(), name='task-delete'),
 
     # Ruta para editar una tarea existente mediante su ID
-    path('edit/<int:pk>/', TaskUpdate.as_view(), name='task-update'),
+    path('edit/<int:pk>/', views.TaskUpdate.as_view(), name='task-update'),
 
     # Ruta principal que muestra la lista de tareas registradas
-    path('', TaskListView.as_view(), name='task-list'),
+    path('', views.TaskListView.as_view(), name='task-list'),
+
+    # Ruta para forzar un error
+    path('glitchtip-debug/', views.trigger_error, name='glitchtip-debug'), 
+    
+   
 ]
 
