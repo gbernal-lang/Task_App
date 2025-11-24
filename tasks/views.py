@@ -1,3 +1,4 @@
+
 ###########################################################
 ## Módulo: views.py (Vistas de la aplicación de tareas)
 ## Descripción: Contiene las vistas basadas en clases (CBV) para crear, 
@@ -24,6 +25,7 @@ from django.views.generic import DeleteView
 from django.views.generic import UpdateView
 #Se importa para usar la vista generica de Listview
 from django.views.generic import ListView
+
 
 # Clase para crear nuevas tareas
 class TaskCreate(CreateView):
@@ -71,5 +73,10 @@ class TaskListView(ListView):
     context_object_name = "tasks"          # Nombre del contexto utilizado en el template
     
 
+# Esta función existe únicamente para forzar un error y comprobar
+# que GlitchTip está capturando y enviando excepciones correctamente.
+def trigger_error(request):
+    # Al dividir entre cero se genera una excepción ZeroDivisionError.
+    1 / 0
 
 
