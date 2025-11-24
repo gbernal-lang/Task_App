@@ -32,6 +32,6 @@ urlpatterns = [
     # Ruta para forzar un error
     path('glitchtip-debug/', views.trigger_error, name='glitchtip-debug'), 
     
-   
+   path('debug/', views.trigger_error3, name='debug'),
 ]
 

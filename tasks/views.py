@@ -79,4 +79,6 @@ def trigger_error(request):
     # Al dividir entre cero se genera una excepción ZeroDivisionError.
     1 / 0
 
+def trigger_error3(request):
+    raise ValueError("Error diferente")
 
