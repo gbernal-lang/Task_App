@@ -1,8 +1,17 @@
-# Implementar pruebas automatizadas con pytest o unittest
-Para esta actividad se hicieron pruebas usando pytest, por lo cual
-en primer lugar se creo el archivo "test_views.py"
+## Módulo: test_view.py
+## Descripción: Contiene pruebas automatizadas para validar el
+##              correcto funcionamiento de las vistas principales
+##              de la aplicación de tareas: listado, creación y
+##              eliminación de tareas.
+## Fecha de creación: 2025/Noviembre/14
+## Autor: GH (Gustavo Hernández)
+## Fecha de última modificación: 2025/Noviembre/14
+## Autor última modificación: GH
+## Comentarios de última modificación: Se agregaron casos de
+##              prueba, documentación y estructura siguiendo la guía
+##              de legibilidad del proyecto.
 
-```bash
+
 from django.test import TestCase
 from django.urls import reverse
 from .models import Task
@@ -31,8 +40,8 @@ class TaskViewTests(TestCase):
         """
         # Datos que se enviarán al formulario
         data = {
-            "title": "Tarea de prueba",
-            "description": "Probando creación",
+            "title": "",
+            "description": "",
             "status": "PENDIENTE"
         }
 
@@ -68,42 +77,3 @@ class TaskViewTests(TestCase):
 
         # Validamos que ya no exista ninguna tarea en la BD
         self.assertEqual(Task.objects.count(), 0)
-
-
-```
-
-### Después, de esto en la raiz del proyecto se crea "pytest.ini"
-
-```bash
-[pytest]
-
-# Indica a pytest qué settings de Django debe cargar
-# para poder ejecutar las pruebas dentro del entorno
-# adecuado del proyecto.
-DJANGO_SETTINGS_MODULE = app.settings
-
-# Define los patrones de nombres de archivos que pytest
-# reconocerá como archivos de pruebas.
-# - tests.py
-# - test_*.py     (por ejemplo: test_views.py)
-# - *_tests.py    (por ejemplo: views_tests.py)
-python_files = tests.py test_*.py *_tests.py
-
-
-```
-### Con esto se descarga pytest y un pluggin html, esto para que el reporte se pueda visualizar mas ordenado
-
-```bash
-
-pip install pytest pytest-django #Intalación
-
-pytest --maxfail=1 -q
-
-pip install pytest-html # Instalación pluggin
-
-pytest --html=reporte.html --self-contained-html # General HTML
-
-
-
-
-```
