@@ -40,8 +40,8 @@ class TaskViewTests(TestCase):
         """
         # Datos que se enviarán al formulario
         data = {
-            "title": "Tarea de prueba",
-            "description": "Probando creación",
+            "title": "",
+            "description": "",
             "status": "PENDIENTE"
         }
 
