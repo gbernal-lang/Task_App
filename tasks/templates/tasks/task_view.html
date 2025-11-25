@@ -24,9 +24,26 @@
     <title>Agregar Tareas</title>
     <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
+<!-- Verifica si existen mensajes enviados desde las vistas -->
+{% if messages %}
+  {% for message in messages %}
+  <script>
+    Swal.fire({
+      icon: "error",
+      title: "{{ message|escapejs }}",
+      showConfirmButton: false,
+      timer: 2200
+    });
+  </script>
+  {% endfor %}
+{% endif %}
+
+    
 <div class="form-card">
     <h2>Agregar una Tarea</h2>
 
