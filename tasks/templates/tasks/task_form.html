@@ -5,10 +5,10 @@
 ##              Incluye protección CSRF y enlace de regreso al listado.
 ## Fecha de creación: 2025/Noviembre/11
 ## Autor: GH (Gustavo Hernández)
-## Fecha de última modificación: 2025/Noviembre/12
+## Fecha de última modificación: 2025/Noviembre/26
 ## Autor última modificación: GH
-## Comentarios de última modificación: Se agregaron comentarios descriptivos 
-##              y se mejoró la estructura conforme a la guía de legibilidad.
+## Comentarios de última modificación: Se agregan alertas
+   y los mensajes de campos vacios o incompletos se visualizan debajo de los inputs
 ###########################################################
 -->
 
@@ -23,10 +23,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'tasks/style2.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>Editar Tareas</title>
 </head>
 
 <body>
+<!--Mensaje de error o exito-->    
+{% if messages %}
+  {% for message in messages %}
+  <script>
+    Swal.fire({
+      icon: "warning",
+      title: "{{ message|escapejs }}",
+      showConfirmButton: false,
+      timer: 2200
+    });
+  </script>
+  {% endfor %}
+{% endif %}
+
     <div class="form-card">
         <h1>Editar Tarea</h1>
 
@@ -34,9 +50,22 @@
         <form method="post">
             <!-- Token CSRF obligatorio en formularios Django -->
             {% csrf_token %}
-            
-            <!-- Renderiza los campos del formulario -->
-            {{ form.as_p }}
+            <!--Recorre cada campo para mostrarlo-->
+            {% for field in form %}
+            <div class="form-group" style="margin-bottom: 16px;">
+            <!--Muestra los label de cada campos-->    
+            {{field.label_tag}}
+            <!--Muestra los inputs de cada campo-->
+            {{field}}
+            <!--Si ese campo tiene errores, los imprime debajo del input-->
+            {%if field.errors %}
+            <div class="form-group" style="margin-bottom: 16px;">
+            {{field.errors}}
+            </div>
+            {% endif %}
+            </div>
+            {% endfor %}
+
 
             <!-- Botón para guardar los cambios -->
             <button type="submit" class="btn btn-save">

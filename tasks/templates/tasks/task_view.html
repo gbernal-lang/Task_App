@@ -5,10 +5,11 @@
 ##              Incluye los campos del modelo y un botón para guardar la información.
 ## Fecha de creación: 2025/Noviembre/07
 ## Autor: GH (Gustavo Hernández)
-## Fecha de última modificación: 2025/Noviembre/12
+## Fecha de última modificación: 2025/Noviembre/26
 ## Autor última modificación: GH
-## Comentarios de última modificación: Se agregaron comentarios descriptivos 
-##              y encabezado conforme a la guía de legibilidad.
+## Comentarios de última modificación: Se agregaron alertas y 
+## mensajes de campos vacios o incompletos, estos se visualizan
+## debajo de los inputs.             
 ###########################################################
 -->
 
@@ -51,10 +52,22 @@
     <form method="POST" enctype="multipart/form-data">
         <!-- Token de seguridad obligatorio en formularios POST -->
         {% csrf_token %}
+        <!---->
+        {% for field in form %}
+        <div class="form-group" style="margin-bottom: 16px;">
 
-        <!-- Muestra los campos del formulario definidos en el modelo -->
-        {{ form.as_p }}
+        {{field.label_tag}}
+        {{field}}
 
+        {% if field.errors %}
+        <div class="text-danger" style="margin-bottom: 4px;">
+        {{field.errors}}
+        </div>
+        {% endif %}
+        </div>
+
+        {% endfor%}
+   
         <!-- Botón para guardar los datos ingresados -->
         <button type="submit" class="btn btn-save">
             <i class="fa-solid fa-arrow-up-from-bracket"></i> Guardar
