@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-9x_9fzj--^b2v(!ly5m6%g79#!=mtkt-d&s)=t@uhqp0_q#zjv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -134,3 +134,61 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    # Versión del esquema de configuración (siempre se deja en 1)
+    "version": 1,
+
+    # Permite mantener los loggers existentes del sistema (no los desactiva)
+    "disable_existing_loggers": False,
+
+    # -----------------------------------------------------------------
+    # FORMATTERS: definen el formato con que se muestran los mensajes
+    # -----------------------------------------------------------------
+    "formatters": {
+        "verbose": {  # Nombre del formato personalizado
+            # Estructura del mensaje del log
+            "format": "{levelname} {asctime} {module} {message}",
+            # 'style' indica cómo se interpretan las llaves del formato
+            "style": "{",
+        },
+    },
+
+    # -----------------------------------------------------------------
+    # HANDLERS: definen **dónde** se van a enviar los logs
+    # (a un archivo, a la consola, a un servicio, etc.)
+    # -----------------------------------------------------------------
+    "handlers": {
+        # Handler que escribe los logs en un archivo llamado "debug.log"
+        "file": {
+            "level": "INFO",  # Registra INFO, WARNING y ERROR
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "debug.log"),  # ruta del archivo
+            "formatter": "verbose",  # usa el formato definido arriba
+        },
+        # Handler que muestra los logs directamente en la terminal
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+
+    # -----------------------------------------------------------------
+    # LOGGERS: agrupan los mensajes por módulo o aplicación
+    # -----------------------------------------------------------------
+    "loggers": {
+        # Logger principal de Django (para mensajes del framework)
+        "django": {
+            "handlers": ["file", "console"],  # Muestra en archivo y consola
+            "level": "INFO",  # Nivel mínimo a registrar
+            "propagate": True,  # Permite que los mensajes se propaguen
+        },
+
+        # Logger específico de la app "tasks"
+        "tasks": {
+            "handlers": ["file", "console"],  # Mismos manejadores
+            "level": "INFO",  # Solo muestra INFO o superior
+            "propagate": False,  # Evita duplicar mensajes
+        },
+    },
+}
